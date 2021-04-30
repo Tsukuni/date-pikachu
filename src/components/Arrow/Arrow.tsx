@@ -7,7 +7,7 @@ interface Props {
   disable?: boolean;
 }
 
-export const Arrow: React.FC<Props> = ({ type, onClick, disable = false }) => <Container onClick={() => !disable && onClick()} disable={disable}>{type === 'right' ? '→' : '←' }</Container>
+export const Arrow: React.FC<Props> = React.memo(({ type, onClick, disable = false }) => <Container onClick={() => !disable && onClick()} disable={disable}>{type === 'right' ? '→' : '←' }</Container>)
 
 const Container = styled.div<{ disable: boolean }>`
   width: 40px;

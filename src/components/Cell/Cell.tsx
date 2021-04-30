@@ -7,17 +7,18 @@ interface Props {
   hoverable?: boolean;
   onClick?: (value: number) => void;
   type?: CellType;
+  unavailable?: boolean;
 }
 
-export const Cell: React.FC<Props> = ({ value = '', hoverable = true, onClick = undefined, type = 'default' }) => {
-  return <Container hoverable={ !!value && hoverable} type={value ? type : 'default'} onClick={() => {
-    if (value && onClick) {
+export const Cell: React.FC<Props> = ({ value = '', hoverable = true, onClick = undefined, type = 'default', unavailable = false }) => {
+  return <Container hoverable={!unavailable && hoverable} unavailable={unavailable} type={value ? type : 'default'} onClick={() => {
+    if (!unavailable && onClick) {
       onClick(value as number);
     }
   }}>{value}</Container>
 }
 
-const Container = styled.div<{ hoverable: boolean; type: CellType }>`
+const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: boolean; }>`
   width: 100%;
   height: 100%;
   display: flex;
@@ -25,6 +26,10 @@ const Container = styled.div<{ hoverable: boolean; type: CellType }>`
   user-select: none;
   align-items: center;
   cursor: ${({ hoverable }) => hoverable ? 'pointer' : ''};
+  ${({ unavailable }) => unavailable && `
+    text-decoration: line-through;
+    color: gray;
+  `}
   font-weight: 600;
   ${({ hoverable }) => hoverable && `
     :hover {
