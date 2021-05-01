@@ -2,7 +2,7 @@ import React from 'react';
 import { getDaysInMonth, getCellType, isUnavailable } from '../../utils';
 import { Cell } from '../Cell';
 import { Arrow } from '../Arrow';
-import { subMonths, addMonths, isAfter, isBefore } from 'date-fns';
+import { subMonths, addMonths, isAfter, isBefore, differenceInCalendarDays } from 'date-fns';
 import { Dates } from '../../interfaces';
 import styled from 'styled-components';
 
@@ -10,9 +10,10 @@ const WEEK = ['日', '月', '火', '水', '木', '金', '土']
 
 interface Props {
   unavailableDates: Array<string>;
+  minPeriod?: number;
 }
 
-export const DatePicker: React.FC<Props> = ({ unavailableDates }) => {
+export const DatePicker: React.FC<Props> = ({ unavailableDates, minPeriod = 0 }) => {
   const [dates, setDates] = React.useState<Partial<Dates>>({
     startDate: undefined,
     endDate: undefined,
@@ -41,6 +42,8 @@ export const DatePicker: React.FC<Props> = ({ unavailableDates }) => {
           endDate: undefined,
         })
       } else {
+        if (dates.endDate && differenceInCalendarDays(dates.endDate, selectedDate) < minPeriod) return;
+
         setDates((date) => ({
           ...date,
           startDate: selectedDate,
@@ -54,6 +57,8 @@ export const DatePicker: React.FC<Props> = ({ unavailableDates }) => {
           endDate: undefined,
         })
       } else {
+        if (dates.startDate && differenceInCalendarDays(selectedDate, dates.startDate) < minPeriod) return;
+
         setDates((date) => ({
           ...date,
           endDate: selectedDate,
