@@ -2,24 +2,25 @@ import React from 'react';
 import { getDaysInMonth, getCellType, isUnavailable } from '../../utils';
 import { Cell } from '../Cell';
 import { Arrow } from '../Arrow';
-import { subMonths, addMonths, isAfter, isBefore, differenceInCalendarDays } from 'date-fns';
+import { subMonths, addMonths, isAfter, isBefore, differenceInCalendarDays, differenceInCalendarMonths, startOfDay } from 'date-fns';
 import { Dates } from '../../interfaces';
 import styled from 'styled-components';
 
 const WEEK = ['日', '月', '火', '水', '木', '金', '土']
 
 interface Props {
-  unavailableDates: Array<string>;
+  minDate?: string;
+  unavailableDates?: Array<string>;
   minPeriod?: number;
 }
 
-export const DatePicker: React.FC<Props> = ({ unavailableDates, minPeriod = 0 }) => {
+export const DatePicker: React.FC<Props> = ({ minDate = '2021-04-21', unavailableDates = [], minPeriod = 0 }) => {
   const [dates, setDates] = React.useState<Partial<Dates>>({
     startDate: undefined,
     endDate: undefined,
   })
   const cursor = React.useRef<'start' | 'end'>('start');
-  const [currentDate, setCurrentDate] = React.useState<Date>(new Date());
+  const [currentDate, setCurrentDate] = React.useState<Date>(startOfDay(new Date()));
   const year = React.useMemo(() => currentDate.getFullYear(), [currentDate])
   const month = React.useMemo(() => currentDate.getMonth() + 1, [currentDate])
   const days = React.useMemo(() => getDaysInMonth(currentDate), [currentDate])
@@ -71,7 +72,7 @@ export const DatePicker: React.FC<Props> = ({ unavailableDates, minPeriod = 0 })
   return (
     <Container>
       <Caption>
-        <Arrow type="left" onClick={subMonth} />
+        <Arrow type="left" onClick={subMonth} disable={!!minDate && differenceInCalendarMonths(currentDate, startOfDay(new Date(minDate))) === 0} />
         {year}年{month}月
         <Arrow type="right" onClick={addMonth} />
       </Caption>
@@ -84,7 +85,7 @@ export const DatePicker: React.FC<Props> = ({ unavailableDates, minPeriod = 0 })
             onClick={handleClickDate}
             type={getCellType(dates, new Date(year, month - 1, value))}
             hoverable={!!value}
-            unavailable={isUnavailable(unavailableDates, new Date(year, month - 1, value))}
+            unavailable={isUnavailable(unavailableDates, startOfDay(new Date(year, month - 1, value)), startOfDay(new Date(minDate)))}
           />
         )}
       </Contents>

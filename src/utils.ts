@@ -44,4 +44,8 @@ export const getCellType = (dates: Partial<Dates>, date: Date): CellType => {
   return 'default'
 }
 
-export const isUnavailable = (unavailableDates: Array<string>, date: Date): boolean => unavailableDates.some((unavailableDate: string) => isSameDay(new Date(unavailableDate), date))
+export const isUnavailable = (unavailableDates: Array<string>, date: Date, minDate?: Date): boolean => {
+  if (minDate && isAfter(minDate, date)) return true;
+
+  return unavailableDates.some((unavailableDate: string) => isSameDay(new Date(unavailableDate), date))
+}
