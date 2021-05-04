@@ -1,10 +1,12 @@
 import React from 'react';
-import { DatePicker } from './components/DatePicker';
-
+import { DateRangePicker } from './components/DateRangePicker';
+import { useDateRangePicker } from './hooks/useDateRangePicker';
 function App() {
+  const { startDate, endDate, ...methods } = useDateRangePicker({});
+
   return (
     <div>
-      <DatePicker unavailableDates={['2021-4-30']} />
+      <DateRangePicker {...methods } />
     </div>
   );
 }

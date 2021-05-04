@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import { CellType } from '../../interfaces';
 
-interface Props {
+export interface Props {
   value?: number | string;
   hoverable?: boolean;
   onClick?: (value: number) => void;
