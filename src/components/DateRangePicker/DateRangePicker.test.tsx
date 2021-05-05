@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from "@testing-library/react"
+import { render } from '@testing-library/react';
 import { DateRangePicker, Props } from './DateRangePicker';
 
 describe('DateRangePicker', () => {
@@ -17,8 +17,8 @@ describe('DateRangePicker', () => {
       minDate: '',
       unavailableDates: [],
       minPeriod: 0,
-    }
-    const { getByText } = render(<DateRangePicker {...props} />)
+    };
+    const { getByText } = render(<DateRangePicker {...props} />);
 
     getByText(`${props.currentDate.getFullYear()}年${props.currentDate.getMonth() + 1}月`);
   });

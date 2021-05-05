@@ -7,7 +7,14 @@ export interface Props {
   disable?: boolean;
 }
 
-export const Arrow: React.FC<Props> = React.memo(({ type, onClick, disable = false }) => <Container onClick={() => !disable && onClick()} disable={disable}>{type === 'right' ? '→' : '←' }</Container>)
+export const Arrow: React.FC<Props> = React.memo(({ type, onClick, disable = false }) => (
+  <Container
+    onClick={() => !disable && onClick()}
+    disable={disable}
+  >
+    {type === 'right' ? '→' : '←' }
+  </Container>
+));
 
 const Container = styled.div<{ disable: boolean }>`
   width: 40px;
@@ -17,6 +24,6 @@ const Container = styled.div<{ disable: boolean }>`
   color: gray;
   font-size: 18px;
   border-radius: 2px;
-  cursor: ${({ disable }) => disable ? '' : 'pointer' };
-  opacity: ${({ disable }) => disable ? 0.2 : 1 };
-`
+  cursor: ${({ disable }) => (disable ? '' : 'pointer')};
+  opacity: ${({ disable }) => (disable ? 0.2 : 1)};
+`;

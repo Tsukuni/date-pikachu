@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from "@testing-library/react"
+import { render, fireEvent } from '@testing-library/react';
 import { Arrow, Props } from './Arrow';
 
 describe('Arrow', () => {
@@ -7,8 +7,8 @@ describe('Arrow', () => {
     const props: Props = {
       type: 'right',
       onClick: jest.fn(),
-    }
-    const { getByText } = render(<Arrow {...props} />)
+    };
+    const { getByText } = render(<Arrow {...props} />);
     getByText('→');
     const button = getByText('→');
     fireEvent.click(button);
@@ -20,10 +20,10 @@ describe('Arrow', () => {
       type: 'right',
       onClick: jest.fn(),
       disable: true,
-    }
-    const { getByText } = render(<Arrow {...props} />)
+    };
+    const { getByText } = render(<Arrow {...props} />);
     const button = getByText('→');
     fireEvent.click(button);
     expect(props.onClick).toBeCalledTimes(0);
-  })
+  });
 });

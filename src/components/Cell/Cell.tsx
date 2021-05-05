@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { CellType } from '../../interfaces';
 
 export interface Props {
@@ -10,13 +10,23 @@ export interface Props {
   unavailable?: boolean;
 }
 
-export const Cell: React.FC<Props> = ({ value = '', hoverable = true, onClick = undefined, type = 'default', unavailable = false }) => {
-  return <Container hoverable={!unavailable && hoverable} unavailable={unavailable} type={value ? type : 'default'} onClick={() => {
-    if (!unavailable && onClick) {
-      onClick(value as number);
-    }
-  }}>{value}</Container>
-}
+export const Cell: React.FC<Props> = ({
+  value = '',
+  hoverable = true, onClick = undefined, type = 'default', unavailable = false,
+}) => (
+  <Container
+    hoverable={!unavailable && hoverable}
+    unavailable={unavailable}
+    type={value ? type : 'default'}
+    onClick={() => {
+      if (!unavailable && onClick) {
+        onClick(value as number);
+      }
+    }}
+  >
+    {value}
+  </Container>
+);
 
 const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: boolean; }>`
   width: 100%;
@@ -25,45 +35,45 @@ const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: 
   justify-content: center;
   user-select: none;
   align-items: center;
-  cursor: ${({ hoverable }) => hoverable ? 'pointer' : ''};
+  cursor: ${({ hoverable }) => (hoverable ? 'pointer' : '')};
   ${({ unavailable }) => unavailable && `
     text-decoration: line-through;
     color: gray;
   `}
   font-weight: 600;
-  ${({ hoverable }) => hoverable && `
+  ${({ hoverable, theme }) => hoverable && `
     :hover {
       border-radius: 4px;
-      background: #f6d7c0;
+      background: ${theme.hover};
     }
   `}
-  ${({ type }) => {
+  ${({ type, theme }) => {
     switch (type) {
-      case 'start':
-        return  `
+    case 'start':
+      return `
           border-radius: 4px 0px 0px 4px;
-          background: #8b4513;
-          color: #fff;
-        `
-      case 'end':
-        return `
+          background: ${theme.primary};
+          color: ${theme.contrastText};
+        `;
+    case 'end':
+      return `
           border-radius: 0px 2px 2px 0px;
-          background: #8b4513;
-          color: #fff;
-        `
-      case 'middle':
-        return `
-          background: #f6d7c0;
-        `
-      case 'single':
-        return `
+          background: ${theme.primary};
+          color: ${theme.contrastText};
+        `;
+    case 'middle':
+      return `
+          background: ${theme.hover};
+        `;
+    case 'single':
+      return `
           border-radius: 4px;
-          background: #8b4513;
-          color: #fff;
-        `
-      default:
-        return '';
+          background: ${theme.primary};
+          color: ${theme.contrastText};
+        `;
+    default:
+      return '';
     }
-   }
   }
-`
+}
+`;

@@ -1,5 +1,7 @@
-import { lastDayOfMonth, startOfMonth, isSameDay, isAfter, isBefore } from 'date-fns';
-import { Dates, CellType } from './interfaces'
+import {
+  lastDayOfMonth, startOfMonth, isSameDay, isAfter, isBefore,
+} from 'date-fns';
+import { Dates, CellType } from './interfaces';
 
 export const getDaysInMonth = (date: Date): Array<Partial<number>> => {
   const lastDate = lastDayOfMonth(date).getDate();
@@ -9,11 +11,11 @@ export const getDaysInMonth = (date: Date): Array<Partial<number>> => {
   const emptyArray = Array(startDay).fill(null);
 
   return [...emptyArray, ...dates];
-}
+};
 
 export const getCellType = (dates: Partial<Dates>, date: Date): CellType => {
   if (!dates.endDate && !dates.startDate) {
-    return 'default'
+    return 'default';
   }
 
   if (dates.endDate && dates.startDate) {
@@ -24,11 +26,11 @@ export const getCellType = (dates: Partial<Dates>, date: Date): CellType => {
     if (isSameDay(dates.startDate, date)) {
       return 'start';
     }
-  
+
     if (isSameDay(dates.endDate, date)) {
       return 'end';
     }
-    
+
     if (isAfter(dates.endDate, date) && isBefore(dates.startDate, date)) {
       return 'middle';
     }
@@ -36,16 +38,21 @@ export const getCellType = (dates: Partial<Dates>, date: Date): CellType => {
     if (dates.startDate && isSameDay(dates.startDate, date)) {
       return 'start';
     }
-  
+
     if (dates.endDate && isSameDay(dates.endDate, date)) {
       return 'end';
     }
   }
-  return 'default'
-}
+  return 'default';
+};
 
-export const isUnavailable = (unavailableDates: Array<string>, date: Date, minDate?: Date): boolean => {
+export const isUnavailable = (
+  unavailableDates: Array<string>,
+  date: Date, minDate?: Date,
+): boolean => {
   if (minDate && isAfter(minDate, date)) return true;
 
-  return unavailableDates.some((unavailableDate: string) => isSameDay(new Date(unavailableDate), date))
-}
+  return (
+    unavailableDates.some((unavailableDate: string) => isSameDay(new Date(unavailableDate), date))
+  );
+};
