@@ -11,8 +11,7 @@ export interface Props {
 }
 
 export const Cell: React.FC<Props> = ({
-  value = '',
-  hoverable = true, onClick = undefined, type = 'default', unavailable = false,
+  value = '', hoverable = true, onClick = undefined, type = 'default', unavailable = false,
 }) => (
   <Container
     hoverable={!unavailable && hoverable}

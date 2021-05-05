@@ -1,6 +1,8 @@
 import React from 'react';
+import {
+  subMonths, addMonths, isAfter, isBefore, differenceInCalendarDays, startOfDay,
+} from 'date-fns';
 import { getDaysInMonth } from '../../utils';
-import { subMonths, addMonths, isAfter, isBefore, differenceInCalendarDays, startOfDay } from 'date-fns';
 import { Dates } from '../../interfaces';
 
 export interface ReturnType {
@@ -24,16 +26,18 @@ export interface DateRangeProps {
   minPeriod?: number;
 }
 
-export const useDateRangePicker = ({ currentDate = new Date(), minDate = '', unavailableDates = [], minPeriod = 0 }: DateRangeProps = {}): ReturnType => {
+export const useDateRangePicker = ({
+  currentDate = new Date(), minDate = '', unavailableDates = [], minPeriod = 0,
+}: DateRangeProps = {}): ReturnType => {
   const [dates, setDates] = React.useState<Partial<Dates>>({
     startDate: undefined,
     endDate: undefined,
-  })
+  });
   const cursor = React.useRef<'start' | 'end'>('start');
   const [_currentDate, setCurrentDate] = React.useState<Date>(startOfDay(currentDate));
-  const year = React.useMemo<number>(() => _currentDate.getFullYear(), [_currentDate])
-  const month = React.useMemo<number>(() => _currentDate.getMonth() + 1, [_currentDate])
-  const days = React.useMemo<number[]>(() => getDaysInMonth(_currentDate), [_currentDate])
+  const year = React.useMemo<number>(() => _currentDate.getFullYear(), [_currentDate]);
+  const month = React.useMemo<number>(() => _currentDate.getMonth() + 1, [_currentDate]);
+  const days = React.useMemo<number[]>(() => getDaysInMonth(_currentDate), [_currentDate]);
 
   const addMonth = React.useCallback((): void => {
     setCurrentDate((date) => addMonths(date, 1));
@@ -44,40 +48,43 @@ export const useDateRangePicker = ({ currentDate = new Date(), minDate = '', una
   }, []);
 
   const handleClick = React.useCallback((value: number): void => {
-    const selectedDate = new Date(year, month - 1, value)
+    const selectedDate = new Date(year, month - 1, value);
 
     if (cursor.current === 'start') {
       if (dates.endDate && isAfter(selectedDate, dates.endDate)) {
         setDates({
           startDate: selectedDate,
           endDate: undefined,
-        })
+        });
       } else {
-        if (dates.endDate && differenceInCalendarDays(dates.endDate, selectedDate) < minPeriod) return;
+        if (
+          dates.endDate && differenceInCalendarDays(dates.endDate, selectedDate) < minPeriod
+        ) return;
 
         setDates((date) => ({
           ...date,
           startDate: selectedDate,
         }));
       }
-      cursor.current = 'end'
+      cursor.current = 'end';
+    } else if (dates.startDate && isBefore(selectedDate, dates.startDate)) {
+      setDates({
+        startDate: selectedDate,
+        endDate: undefined,
+      });
     } else {
-      if (dates.startDate && isBefore(selectedDate, dates.startDate)) {
-        setDates({
-          startDate: selectedDate,
-          endDate: undefined,
-        })
-      } else {
-        if (dates.startDate && differenceInCalendarDays(selectedDate, dates.startDate) < minPeriod) return;
+      if (
+        dates.startDate
+        && differenceInCalendarDays(selectedDate, dates.startDate) < minPeriod
+      ) return;
 
-        setDates((date) => ({
-          ...date,
-          endDate: selectedDate,
-        }));
-        cursor.current = 'start'
-      }
+      setDates((date) => ({
+        ...date,
+        endDate: selectedDate,
+      }));
+      cursor.current = 'start';
     }
-  }, [dates, year, month, minPeriod])
+  }, [dates, year, month, minPeriod]);
 
   return {
     startDate: dates.startDate,
@@ -91,5 +98,5 @@ export const useDateRangePicker = ({ currentDate = new Date(), minDate = '', una
     minDate,
     minPeriod,
     unavailableDates,
-  }
-}
+  };
+};
