@@ -4,28 +4,26 @@ import { Arrow, Props } from './Arrow';
 
 describe('Arrow', () => {
   test('render component', () => {
-    const func = jest.fn();
     const props: Props = {
       type: 'right',
-      onClick: func,
+      onClick: jest.fn(),
     }
     const { getByText } = render(<Arrow {...props} />)
     getByText('→');
     const button = getByText('→');
     fireEvent.click(button);
-    expect(func).toBeCalledTimes(1);
+    expect(props.onClick).toBeCalledTimes(1);
   });
 
-  test('disable true', () => {
-    const func = jest.fn();
+  test('cant click', () => {
     const props: Props = {
       type: 'right',
-      onClick: func,
+      onClick: jest.fn(),
       disable: true,
     }
     const { getByText } = render(<Arrow {...props} />)
     const button = getByText('→');
     fireEvent.click(button);
-    expect(func).toBeCalledTimes(0);
+    expect(props.onClick).toBeCalledTimes(0);
   })
 });

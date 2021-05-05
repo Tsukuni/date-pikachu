@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 const WEEK = ['日', '月', '火', '水', '木', '金', '土']
 
-interface Props {
+export interface Props {
   dates: Partial<Dates>;
   days: number[];
   currentDate: Date;
@@ -20,7 +20,7 @@ interface Props {
   minPeriod: number;
 }
 
-export const DateRangePicker: React.FC<Props> = ({
+export const DateRangePicker: React.FC<Props> = React.memo(({
   dates,
   currentDate,
   days,
@@ -42,7 +42,7 @@ export const DateRangePicker: React.FC<Props> = ({
       </Caption>
       <Contents>
         {WEEK.map((value: string): React.ReactNode => <Cell key={value} value={value} hoverable={false} />)}
-        {days.map((value: Partial<number>, index: number): React.ReactNode =>
+        {days.map((value: number, index: number): React.ReactNode =>
           <Cell
             key={index}
             value={value}
@@ -55,7 +55,7 @@ export const DateRangePicker: React.FC<Props> = ({
       </Contents>
     </Container>
   )
-}
+})
 
 const Container = styled.div`
   width: 280px;
