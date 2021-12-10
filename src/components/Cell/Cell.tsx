@@ -38,7 +38,7 @@ const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: 
   cursor: ${({ hoverable }) => (hoverable ? 'pointer' : '')};
   ${({ unavailable }) => unavailable && `
     text-decoration: line-through;
-    color: gray;
+    color: #aaaaaa;
   `}
   font-weight: bold;
   ${({ hoverable, theme }) => hoverable && `

@@ -107,7 +107,6 @@ const Container = styled.div`
   font-feature-settings: "palt";
   font-size: 14px;
   font-size: 1.4rem;
-  letter-spacing: .06em;
   line-height: 1.5;
   word-break: break-all;
   word-wrap: break-word;
@@ -154,5 +153,5 @@ const Weeks = styled.div`
   grid-auto-rows: 44px;
   margin: auto;
   padding: 16px 0 0 0;
-  color: #888;
+  color: #8e8e8e;
 `;
