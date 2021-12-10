@@ -26,6 +26,6 @@ const Container = styled.div<{ disable: boolean }>`
   cursor: ${({ disable }) => (disable ? '' : 'pointer')};
   opacity: ${({ disable }) => (disable ? 0.2 : 1)};
   &:hover {
-    background: #eee;
+    background: #f5f5f5;
   }
 `;

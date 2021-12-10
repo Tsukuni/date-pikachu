@@ -38,7 +38,7 @@ const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: 
   cursor: ${({ hoverable }) => (hoverable ? 'pointer' : '')};
   ${({ unavailable }) => unavailable && `
     text-decoration: line-through;
-    color: gray;
+    color: #aaaaaa;
   `}
   font-weight: bold;
   ${({ hoverable, theme }) => hoverable && `
@@ -66,6 +66,9 @@ const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: 
             background: ${theme.hover};
             z-index: -1;
           }
+          &:hover {
+            border: none;
+          }
         `;
     case 'end':
       return `
@@ -82,6 +85,9 @@ const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: 
             content: '';
             background: ${theme.hover};
             z-index: -1;
+          }
+          &:hover {
+            border: none;
           }
         `;
     case 'middle':

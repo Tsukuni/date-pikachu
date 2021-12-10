@@ -106,16 +106,11 @@ const Container = styled.div`
   font-family: Helvetica Neue,Arial,Hiragino Kaku Gothic ProN,Meiryo,sans-serif;
   font-feature-settings: "palt";
   font-size: 14px;
-  font-size: 1.4rem;
-  letter-spacing: .06em;
   line-height: 1.5;
-  word-break: break-all;
-  word-wrap: break-word;
   color: #414141;
   width: fit-content;
   margin: auto;
   padding: 24px;
-  box-sizing: content-box;  
   box-shadow: 0 2px 12px rgba(0,0,0,.15);
   border: solid 1px #ddd;
   border-radius: 12px;
@@ -139,11 +134,6 @@ const Caption = styled.div`
 `;
 
 const Year = styled.div`
-  font-family: Helvetica Neue,Arial,Hiragino Kaku Gothic ProN,Meiryo,sans-serif;
-  font-feature-settings: "palt";
-  font-size: 14px;
-  font-size: 1.4rem;
-  letter-spacing: .06em;
   font-size: 16px;
   font-weight: bold;
 `;
@@ -154,5 +144,5 @@ const Weeks = styled.div`
   grid-auto-rows: 44px;
   margin: auto;
   padding: 16px 0 0 0;
-  color: #888;
+  color: #8e8e8e;
 `;
