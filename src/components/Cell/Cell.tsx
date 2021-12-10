@@ -44,7 +44,8 @@ const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: 
   ${({ hoverable, theme }) => hoverable && `
     :hover {
       border-radius: 100px;
-      background: ${theme.primary};
+      border: solid 2px ${theme.primary};
+      box-sizing: border-box;
     }
   `}
   ${({ type, theme }) => {
