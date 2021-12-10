@@ -34,31 +34,54 @@ const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: 
   justify-content: center;
   user-select: none;
   align-items: center;
+  font-size: 14px;
   cursor: ${({ hoverable }) => (hoverable ? 'pointer' : '')};
   ${({ unavailable }) => unavailable && `
     text-decoration: line-through;
     color: gray;
   `}
-  font-weight: 600;
+  font-weight: bold;
   ${({ hoverable, theme }) => hoverable && `
     :hover {
-      border-radius: 4px;
-      background: ${theme.hover};
+      border-radius: 100px;
+      background: ${theme.primary};
     }
   `}
   ${({ type, theme }) => {
     switch (type) {
     case 'start':
       return `
-          border-radius: 4px 0px 0px 4px;
+          position: relative;
+          border-radius: 100px;
           background: ${theme.primary};
           color: ${theme.contrastText};
+          &:before {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 22px;
+            height: 44px;
+            content: '';
+            background: ${theme.hover};
+            z-index: -1;
+          }
         `;
     case 'end':
       return `
-          border-radius: 0px 2px 2px 0px;
+          position: relative;
+          border-radius: 100px;
           background: ${theme.primary};
           color: ${theme.contrastText};
+          &:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 22px;
+            height: 44px;
+            content: '';
+            background: ${theme.hover};
+            z-index: -1;
+          }
         `;
     case 'middle':
       return `
@@ -66,7 +89,7 @@ const Container = styled.div<{ hoverable: boolean; type: CellType; unavailable: 
         `;
     case 'single':
       return `
-          border-radius: 4px;
+          border-radius: 100px;
           background: ${theme.primary};
           color: ${theme.contrastText};
         `;
