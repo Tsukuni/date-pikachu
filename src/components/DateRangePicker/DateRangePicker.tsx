@@ -9,8 +9,8 @@ import { Dates } from '../../interfaces';
 const WEEK = ['日', '月', '火', '水', '木', '金', '土'];
 
 const defaultTheme = {
-  primary: '#8b4513',
-  hover: '#f6d7c0',
+  primary: '#0d6780',
+  hover: '#f1f7fb',
   contrastText: '#fff',
 };
 
@@ -59,16 +59,18 @@ export const DateRangePicker: React.FC<Props> = React.memo(({
               && differenceInCalendarMonths(currentDate, startOfDay(new Date(minDate))) === 0
             }
           />
-          {year}
-          年
-          {month}
-          月
+          <Year>
+            {year}
+            年
+            {month}
+            月
+          </Year>
           <Arrow
             type="right"
             onClick={addMonth}
           />
         </Caption>
-        <Contents>
+        <Weeks>
           {WEEK.map((value: string): React.ReactNode => (
             <Cell
               key={value}
@@ -76,6 +78,8 @@ export const DateRangePicker: React.FC<Props> = React.memo(({
               hoverable={false}
             />
           ))}
+        </Weeks>
+        <Contents>
           {days.map((value: number, index: number): React.ReactNode => (
             <Cell
               key={index}
@@ -99,18 +103,23 @@ export const DateRangePicker: React.FC<Props> = React.memo(({
 });
 
 const Container = styled.div`
-  width: 280px;
-  height: 300px;
+  font-family: Helvetica Neue,Arial,Hiragino Kaku Gothic ProN,Meiryo,sans-serif;
+  font-feature-settings: "palt";
+  font-size: 14px;
+  line-height: 1.5;
+  color: #414141;
+  width: fit-content;
   margin: auto;
-  padding: 10px;
-  box-sizing: content-box;
-  margin-top: 30px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  border: solid 1px #ddd;
+  border-radius: 12px;
 `;
 
 const Contents = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 40px);
-  grid-auto-rows: 40px;
+  grid-template-columns: repeat(7, 44px);
+  grid-auto-rows: 44px;
   margin: auto;
 `;
 
@@ -121,6 +130,19 @@ const Caption = styled.div`
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  font-weight: 600;
   margin-bottom: 8px;
+`;
+
+const Year = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const Weeks = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 44px);
+  grid-auto-rows: 44px;
+  margin: auto;
+  padding: 16px 0 0 0;
+  color: #8e8e8e;
 `;

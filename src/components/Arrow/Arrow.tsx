@@ -17,13 +17,15 @@ export const Arrow: React.FC<Props> = React.memo(({ type, onClick, disable = fal
 ));
 
 const Container = styled.div<{ disable: boolean }>`
-  width: 40px;
-  height: 28px;
-  border: 1px solid #c4c4c4;
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 100px;
   user-select: none;
-  color: gray;
   font-size: 18px;
-  border-radius: 2px;
   cursor: ${({ disable }) => (disable ? '' : 'pointer')};
   opacity: ${({ disable }) => (disable ? 0.2 : 1)};
+  &:hover {
+    background: #f5f5f5;
+  }
 `;
